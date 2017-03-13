@@ -1,0 +1,55 @@
+@import "../../stylesheets/utilities/variables";
+@import "../../stylesheets/utilities/mixins";
+%highlight-color {
+  background: get-color($md-blue-grey, 500);
+  color: get-contrast($md-blue-grey, 500);
+}
+
+.az-login-c {
+  .az-login-wrapper {
+    @include set-size(75%, auto, true, true);
+    background: get-color($md-blue-grey, 50);
+    min-height: 145px;
+    min-width: 250px;
+    margin: 15% auto;
+    padding: 55px 25px 1px;
+    position: relative;
+    top: 0;
+
+    form {
+      margin-bottom: 0;
+    }
+    legend {
+      position: absolute;
+      top: 0;
+      left: 25px;
+      padding: 5px 15px;
+      @extend %highlight-color;
+    }
+
+    input {
+      width: 100%;
+      margin: 10px 1px;
+      padding: 10px 5%;
+      border: thin get-color($md-blue-grey, 200) solid;
+      background: white;
+      color: get-color($md-blue-grey, 400);
+     @include font-size(11px);
+      border-radius: 0;
+    }
+
+    .az-login-button {
+      margin-top: 10px;
+      float: right;
+      border: thin get-color($md-blue-grey, 800);
+      @extend %highlight-color;
+    }
+
+    a {
+      line-height: 58px;
+      margin-left: 5px;
+      @include font-size(12px);
+      cursor: pointer;
+    }
+  }
+}

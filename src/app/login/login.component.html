@@ -1,0 +1,27 @@
+<div class="az-login-c">
+    <!-- left-side -->
+    <div class="az-split-screen az-left-side">
+
+    </div>
+
+    <!-- Right-side -->
+    <div class="az-split-screen az-right-side">
+        <div class="az-login-wrapper az-cards card-3">
+            <!-- login form> -->
+            <form>
+                <fieldset>
+                    <legend>Log in</legend>
+                    <button (click)="onAzureLogin($event)" class="az-button az-azure-button"><i class="az-icon az-azure-icon"></i> Connect with Azure</button>
+                    <input id="name" name="name" placeholder="Username" type="text" />
+                    <input id="password" name="password" placeholder="password" type="password" />
+                    <button type="submit" class="az-login-button">Login</button>
+                    <a>Recover password</a>
+                </fieldset>
+            </form>
+            <!--/ Login form -->
+        </div>
+
+        <az-login-logs [logs]="loginLogs"></az-login-logs>
+    </div>
+</div>
+

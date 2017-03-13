@@ -1,0 +1,29 @@
+
+.az-split-screen {
+  display: inline-block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+
+
+
+  &.az-left-side {
+    background: get-color($md-blue-grey, 100);
+    left: 0;
+    width: 60%;
+    @include breakpoint(bp-med) {
+      width: 0%;
+      visibility: hidden;
+    }
+  }
+
+  &.az-right-side {
+    background: get-color($md-blue-grey, 900);
+    right: 0;
+    width: 40%;
+    @include breakpoint(bp-med) {
+      width: 100%;
+    }
+  }
+}
+

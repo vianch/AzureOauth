@@ -1,0 +1,29 @@
+.az-login-log {
+  width:80%;
+  min-height: 100px;
+  height: auto;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  padding: 0 25px;
+  margin: 0;
+
+  li {
+    color: white;
+    font-size: 13px;
+    line-height: 15px;
+    list-style: none;
+    animation: fadein 4s;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}

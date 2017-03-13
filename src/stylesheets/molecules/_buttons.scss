@@ -1,0 +1,11 @@
+.az-button {
+  display: block;
+
+  &.az-azure-button {
+    background: get-color($md-light-blue, 500);
+    color: get-contrast($md-light-blue, 500);
+    width: 100%;
+    border: thin get-color($md-light-blue, 600) solid;
+  }
+
+}
