@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
+import {Observable} from "rxjs";
 
 import { RestService } from "./rest.service";
 import { AzureConfigurations } from "./azure.config";
 import { LocalStorageService } from "./local-storage.service";
+import {Headers, RequestOptions} from "@angular/http";
 
 @Injectable()
 export class AzureService implements AzureServiceMethods {
@@ -27,19 +29,10 @@ export class AzureService implements AzureServiceMethods {
         }
     }
     
-    public requestAuthorizationToken(): void {
-        /**
-         * POST /{tenant}/oauth2/token HTTP/1.1
-         Host: https://login.microsoftonline.com
-         Content-Type: application/x-www-form-urlencoded
-         grant_type=authorization_code
-         &client_id=2d4d11a2-f814-46a7-890a-274a72a7309e
-         &code=AwABAAAAvPM1KaPlrEqdFSBzjqfTGBCmLdgfSTLEMPGYuNHSUYBrqqf_ZT_p5uEAEJJ_nZ3UmphWygRNy2C3jJ239gV_DBnZ2syeg95Ki-374WHUP-i3yIhv5i-7KU2CEoPXwURQp6IVYMw-DjAOzn7C3JCu5wpngXmbZKtJdWmiBzHpcO2aICJPu1KvJrDLDP20chJBXzVYJtkfjviLNNW7l7Y3ydcHDsBRKZc3GuMQanmcghXPyoDg41g8XbwPudVh7uCmUponBQpIhbuffFP_tbV8SNzsPoFz9CLpBCZagJVXeqWoYMPe2dSsPiLO9Alf_YIe5zpi-zY4C3aLw5g9at35eZTfNd0gBRpR5ojkMIcZZ6IgAA
-         &redirect_uri=https%3A%2F%2Flocalhost%2Fmyapp%2F
-         &resource=https%3A%2F%2Fservice.contoso.com%2F
-         &client_secret=p@ssw0rd
-         */
-        this.restService.getPostData(AzureConfigurations.baseUrl, "/easdasdasdasd/oauth2/token", {} );
+    public requestAuthorizationToken(code: string): Observable<AutorizationAccessResponse> {
+        let options = new RequestOptions({ headers:  new Headers({"Content-Type": "application/x-www-form-urlencoded",}) });
+        let post = AzureConfigurations.requestAccessToken.replace(AzureConfigurations.tokenCodeWord, code);
+        return this.restService.getPostData(`${AzureConfigurations.baseUrl}/${AzureConfigurations.tenantId}/oauth2/token`, post, options );
     }
     
     private generateStateId(): string {

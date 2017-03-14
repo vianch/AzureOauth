@@ -26,8 +26,7 @@ export class LoginComponent {
 	private getAuthorizationRequest(): void {
 		this.activatedRoute.queryParams.subscribe( (params: AuthorizationRequestResponse) => {
 			if (params.code) {
-				this.setLog(`state: ${params.state}`);
-				this.setLog(`session_state: ${params.session_state}`);
+				this.authorizationRequestLogs(params);
 				this.requestAccessToken(params);
 			}
 			
@@ -39,10 +38,35 @@ export class LoginComponent {
 	
 	private requestAccessToken(params: AuthorizationRequestResponse): void {
 		if (this.azureService.isValidBrowser(params.state)) {
-			
+			this.azureService.requestAuthorizationToken(params.code).subscribe((response: AutorizationAccessResponse) => {
+				this.accessTokenHandler(response);
+			});
 		} else {
 			this.setLog(`ERROR: Is not valid browser`);
 		}
+	}
+
+	private accessTokenHandler(response: AutorizationAccessResponse): void {
+		if (response && response.access_token && response.id_token) {
+			setTimeout(() => {this.setLog(`Thera authorized`); }, 2600);
+			this.decodeUser(response.id_token);
+		} else {
+			this.setLog(`ERROR: Thera is Unauthorized`);
+		}
+	}
+
+	private decodeUser(idToken: string): void {
+		let base64Url = idToken.split('.')[1];
+		let base64 = base64Url.replace('-', '+').replace('_', '/');
+		let userInformation: JWTUserInformation = <JWTUserInformation>JSON.parse(window.atob(base64));
+		setTimeout(() => {this.setLog(`Setting session`); }, 600);
+		console.log(userInformation);
+	}
+
+	private authorizationRequestLogs(params: AuthorizationRequestResponse): void {
+		this.setLog(`session_state: ${params.session_state}`);
+		setTimeout(() => { this.setLog(`state: ${params.state}`); }, 1000);
+		setTimeout(() => {this.setLog(`Logged in Azure successful`); }, 1800);
 	}
 	
 	private setLog(logData: string): void {
