@@ -13,10 +13,12 @@
   justify-content: flex-end;
 
   li {
-    color: white;
-    font-size: 13px;
-    line-height: 15px;
+    line-height: 9px;
     list-style: none;
+    animation: inherit;
+    word-spacing: 2px;
+    font-size: 11px;
+    color: white;
     animation: fadein 4s;
   }
 }

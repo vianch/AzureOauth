@@ -8,4 +8,10 @@
     border: thin get-color($md-light-blue, 600) solid;
   }
 
+  span {
+    margin-left: 2px;
+    @include breakpoint(bp-small) {
+      display: none;
+    }
+  }
 }

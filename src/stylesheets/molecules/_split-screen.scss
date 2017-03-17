@@ -6,11 +6,12 @@
   top: 0;
 
   &.az-left-side {
-    background: get-color($md-blue-grey, 100) url("../images/default_signin_illustration.png") no-repeat;
+    background: get-color($md-blue-grey, 100) url("../images/ccrenew_home.jpg") no-repeat;
     background-size: cover;
     left: 0;
     width: 60%;
     overflow: hidden;
+    @include opacity(0.86);
 
     @include breakpoint(bp-med) {
       width: 0%;

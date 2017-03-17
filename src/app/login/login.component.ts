@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ActivatedRoute, Params} from '@angular/router';
+import {Component} from "@angular/core";
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { AzureService } from "../shared/services/azure.service";
 
@@ -11,10 +11,17 @@ import { AzureService } from "../shared/services/azure.service";
 })
 export class LoginComponent {
 	public loginLogs: Array<string> = [];
-    
+    public showAzureConnection: boolean;
+	private isLogged: boolean;
+
 	constructor(
 		private azureService: AzureService,
-		private activatedRoute: ActivatedRoute) {
+		private activatedRoute: ActivatedRoute,
+		private router: Router) {
+
+		this.showAzureConnection = true;
+		this.isLogged = false;
+
 		this.getAuthorizationRequest();
     }
     
@@ -26,6 +33,7 @@ export class LoginComponent {
 	private getAuthorizationRequest(): void {
 		this.activatedRoute.queryParams.subscribe( (params: AuthorizationRequestResponse) => {
 			if (params.code) {
+				this.showAzureConnection = false;
 				this.authorizationRequestLogs(params);
 				this.requestAccessToken(params);
 			}
@@ -59,13 +67,18 @@ export class LoginComponent {
 		let base64Url = idToken.split('.')[1];
 		let base64 = base64Url.replace('-', '+').replace('_', '/');
 		let userInformation: JWTUserInformation = <JWTUserInformation>JSON.parse(window.atob(base64));
-		setTimeout(() => {this.setLog(`Setting session`); }, 600);
-		console.log(userInformation);
+		setTimeout(() => {
+			this.setLog(`Setting session`);
+			console.log(userInformation);
+			this.isLogged = true;
+			this.router.navigate(["/home"]);
+		}, 3600);
+
 	}
 
 	private authorizationRequestLogs(params: AuthorizationRequestResponse): void {
-		this.setLog(`session_state: ${params.session_state}`);
-		setTimeout(() => { this.setLog(`state: ${params.state}`); }, 1000);
+		this.setLog(`Session state: ${params.session_state}`);
+		setTimeout(() => { this.setLog(`State: ${params.state}`); }, 1000);
 		setTimeout(() => {this.setLog(`Logged in Azure successful`); }, 1800);
 	}
 	

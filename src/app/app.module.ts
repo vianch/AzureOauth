@@ -5,6 +5,7 @@ import { AppRouting } from "./app.routes";
 import { CoreModule } from "./core/";
 import { SharedModule } from "./shared/";
 import { LoginComponent } from "./login/login.component";
+import {HomeComponent} from "./home/home.component";
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import { LoginComponent } from "./login/login.component";
     ],
     declarations: [
         AppComponent,
+        HomeComponent,
         LoginComponent,
     ],
     providers: [],
